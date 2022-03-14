@@ -1,6 +1,6 @@
 #! /usr/bin/env nextflow
 
-params.sorted_bam = file("/Users/manthospitoulias/Desktop/test_files/bam_files/*.sorted.bam")
+params.sorted_bam = file("PATH/*.sorted.bam")
 
 
 process bam2fq {

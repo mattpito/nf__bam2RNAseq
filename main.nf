@@ -1,9 +1,13 @@
 #! /usr/bin/env nextflow
 
+<<<<<<< HEAD
 params.sorted_bam = file("/Users/manthospitoulias/Desktop/test_files/bam_files/*.sorted.bam")
 params.publish_dir = './results'
 //publishDir "${params.publish_dir}/RE_output", mode: 'copy'
 
+=======
+params.sorted_bam = file("PATH/*.sorted.bam")
+>>>>>>> 60215d0f85af8d52ea3bd3bf352612b84c7f066f
 
 
 process bam2fq {

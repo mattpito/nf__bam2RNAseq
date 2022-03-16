@@ -100,5 +100,27 @@ process star_index {
 }
 
 
+Channel
+    .fromFilePairs('./cached/output_fixed_r1r2//*_{r1,r2}_fixed.fastq')
+    .set {fixed_samples_ch}
+
+process star_align {
+   
+    input:
+    tuple val(id), x from fixed_samples_ch
+    path(y) from STARgenomeIndex
+
+    shell:
+    def (read1, read2) = x
+    """
+    mkdir starAligned
+    STAR --runThreadN ${task.cpus} --genomeDir $y --readFilesIn ${read1} ${read2} --outFileNamePrefix starAligned --outSAMtype BAM SortedByCoordinate --quantMode TranscriptomeSAM GeneCounts --quantTranscriptomeBan IndelSoftclipSingleend
+    """
+}
+
+
+
+
+
 
 

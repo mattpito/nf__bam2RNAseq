@@ -1,9 +1,12 @@
 #! /usr/bin/env nextflow
 
-params.sorted_bam = file("/Users/manthospitoulias/Desktop/test_files/bam_files/*.sorted.bam")
+params.sorted_bam = file("./test_files/bam_files/*.sorted.bam")
 params.publish_dir = './results'
 //publishDir "${params.publish_dir}/RE_output", mode: 'copy'
-
+params.genome= file("./test_files/genomes/*.fa")
+params.gtf = file("./test_files/genomes/*.gtf")
+params.largeGENOME= "14"
+params.smallGENOME = "6"
 
 
 process bam2fq {
@@ -79,10 +82,22 @@ process repair_files {
 
 }
 
+process star_index {
+      
 
+   input: 
+   file gen from params.genome
+   file gtf from params.gtf 
+   output:
+   path "starGenomeDIR" into STARgenomeIndex
 
-
-
+   
+   shell:
+   """
+   mkdir starGenomeDIR
+   STAR --runThreadN ${task.cpus} --runMode genomeGenerate --genomeSAindexNbases $params.smallGENOME  --genomeDir starGenomeDIR --genomeFastaFiles $gen --sjdbGTFfile $gtf
+  """
+}
 
 
 

@@ -7,7 +7,7 @@ Nextflow workflow starting from bam files, reverse engineering to fastq files. F
 
 The process of reverse engineering can leave the paired fastq r1,r2 desynced, thus bottlenecking downstream applications ( e.g., using RSEM). That is why we repair the files with BBMAP repair.sh. This script along with its dependencies can be stored in a directory  named "bin" inside the main nextflow directory (to avoid absolute paths). E.g., 
 
-'''bash
+```bash
 .
 ├── README.md
 ├── another_flow.nf
@@ -19,6 +19,6 @@ The process of reverse engineering can leave the paired fastq r1,r2 desynced, th
 ├── test_files
 └── work
 
-'''
+```
 
 

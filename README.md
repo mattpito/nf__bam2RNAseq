@@ -6,6 +6,8 @@ Nextflow workflow starting from bam files, reverse engineering to fastq files. F
 
 Self-explanatory. Bear in mind (again) flow is currently for paired sequencing. Will update it in time to include more cases.
 
+<u>You can edit the config file to include your bam locations or the final results directory.</u>
+
 ## Fastq split to r1,r2.fastq
 Self-explanatory. The input fastq file has a /1 or /2 id next to the reads. This is used to split the fastq to 2 subsequent fastq files that are paired BUT DESYNCED.
 

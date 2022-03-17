@@ -3,10 +3,6 @@
 params.sorted_bam = file("./test_files/bam_files/*.sorted.bam")
 params.publish_dir = './results'
 //publishDir "${params.publish_dir}/RE_output", mode: 'copy'
-params.genome= file("./test_files/genomes/*.fa")
-params.gtf = file("./test_files/genomes/*.gtf")
-params.largeGENOME= "14"
-params.smallGENOME = "6"
 
 
 process bam2fq {
@@ -65,7 +61,7 @@ Channel
 
 
 process repair_files {
-    storeDir './cached/output_fixed_r1r2/'
+    publishDir "${params.publish_dir}/", mode: 'copy'
 
     input:
     tuple val(id), file(x) from samples_ch  
@@ -82,41 +78,6 @@ process repair_files {
 
 }
 
-process star_index {
-      
-
-   input: 
-   file gen from params.genome
-   file gtf from params.gtf 
-   output:
-   path "starGenomeDIR" into STARgenomeIndex
-
-   
-   shell:
-   """
-   mkdir starGenomeDIR
-   STAR --runThreadN ${task.cpus} --runMode genomeGenerate --genomeSAindexNbases $params.smallGENOME  --genomeDir starGenomeDIR --genomeFastaFiles $gen --sjdbGTFfile $gtf
-  """
-}
-
-
-Channel
-    .fromFilePairs('./cached/output_fixed_r1r2//*_{r1,r2}_fixed.fastq')
-    .set {fixed_samples_ch}
-
-process star_align {
-   
-    input:
-    tuple val(id), x from fixed_samples_ch
-    path(y) from STARgenomeIndex
-
-    shell:
-    def (read1, read2) = x
-    """
-    mkdir starAligned
-    STAR --runThreadN ${task.cpus} --genomeDir $y --readFilesIn ${read1} ${read2} --outFileNamePrefix starAligned --outSAMtype BAM SortedByCoordinate --quantMode TranscriptomeSAM GeneCounts --quantTranscriptomeBan IndelSoftclipSingleend
-    """
-}
 
 
 

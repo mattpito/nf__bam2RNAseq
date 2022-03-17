@@ -1,6 +1,13 @@
-# nf__bam2fastq
-Nextflow workflow starting from bam files, reverse engineering to fastq files. Files can be used for transcript abundance quantification e.g.,  STAR/RSEM or Kallisto.
+# nf__bam2fastq by Manthos Pitoulias :bowtie:
+Nextflow workflow starting from bam files, reverse engineering to fastq files. Files can be used for transcript abundance quantification e.g.,  STAR/RSEM or Kallisto. THIS WORKFLOW IF FOR PAIRED SEQUENCING.
 
+
+## Bam to fastq
+
+Self-explanatory. Bear in mind (again) flow is currently for paired sequencing. Will update it in time to include more cases.
+
+## Fastq split to r1,r2.fastq
+Self-explanatory. The input fastq file has a /1 or /2 id next to the reads. This is used to split the fastq to 2 subsequent fastq files that are paired BUT DESYNCED.
 
 
 ## Repairing the files
@@ -21,4 +28,4 @@ The process of reverse engineering can leave the paired fastq r1,r2 desynced, th
 
 ```
 
-
+Singleton Reads are not included (Reads without a pair after sync)
